@@ -11,6 +11,7 @@ Implementar:
 - Um timer;
 - Insígnias;
 - Outras gerações;
+- Responsividade;
 
 Estou usando o pacote [pokemon](https://www.npmjs.com/package/pokemon) para pegar os nomes e o [pokeAPI](https://pokeapi.co/) para pegar os sprites.
 
