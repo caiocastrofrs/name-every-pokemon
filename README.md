@@ -8,7 +8,6 @@
 
 Implementar:
 
-- Um timer;
 - Insígnias;
 - Outras gerações;
 - Responsividade;
