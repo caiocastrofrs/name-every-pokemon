@@ -1,8 +1,11 @@
+import Timer from "./components/Timer";
+import { TimerContext } from "./context/timer/context";
 import formatPokemonName from "./utils/formatPokemonName";
 import { getPokemonByGen } from "./utils/pokemon";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 function App() {
+  const timerValue = useContext(TimerContext);
   const pokemonList = getPokemonByGen(1);
   const progress = localStorage.getItem("pokemonFound");
 
@@ -46,11 +49,12 @@ function App() {
         {pokemonList.map((pokemon) => (
           <div key={pokemon.id}>
             <img
-              className={`w-15 ${
+              className={`w-15  ${
                 !pokemonFound.includes(formatPokemonName(pokemon.name))
                   ? "grayscale"
                   : "animate-bounce"
-              }`}
+              }
+              `}
               src={pokemon.spriteUrl}
               alt={pokemon.name}
             />
@@ -58,23 +62,19 @@ function App() {
         ))}
       </div>
       <div className="w-full flex gap-5 justify-center mt-5 items-center">
-        <span className="text-4xl text-pokemon-yellow">
-          {Math.floor(0 / 60).toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-          })}
-          :{Math.floor(0).toLocaleString("en-US", { minimumIntegerDigits: 2 })}
-        </span>
+        <Timer />
         <div className="flex flex-col gap-2 items-center relative">
           <input
             type="text"
             value={inputValue}
             placeholder="Type a Pokémon name here"
-            className="w-80 text-center p-3 rounded-md bg-neutral-50"
+            className="w-80 text-center p-3 rounded-md bg-neutral-50 disabled:bg-neutral-400"
             onChange={handleChange}
+            disabled={!timerValue.start}
           />
           {pokemonAlreadyInserted && (
-            <span className="text-pokemon-yellow absolute -bottom-7">
-              Pokémon já nomeado!
+            <span className="text-pokemon-yellow absolute -bottom-8 w-90">
+              This Pokémon has already been named!
             </span>
           )}
         </div>
@@ -82,7 +82,7 @@ function App() {
         <span className="text-lg text-pokemon-yellow">
           <span className="text-white">{pokemonFound.length}</span> of{" "}
           <span className="text-white">{pokemonList.length}</span> Pokémon
-          named!
+          named! {pokemonFound.length === 151 && "Congratulations!"}
         </span>
       </div>
     </div>
