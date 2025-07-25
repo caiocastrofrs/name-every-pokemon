@@ -41,7 +41,6 @@ export default function PokemonProvider({ children }: PropsWithChildren) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUserInput(e.target.value);
 
-  console.log(pokemonNames);
   const handleChangeGeneration = (value: number) => {
     setCurrentGeneration(value);
   };
