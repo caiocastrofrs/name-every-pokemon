@@ -16,7 +16,7 @@ export default function TimerProvider({ children }: PropsWithChildren) {
   const handleCount = useCallback((ms: number) => setCount(ms), []);
   const handleFormattedTime = useCallback(
     (time: string) => setFormattedTime(time),
-    []
+    [],
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +36,7 @@ export default function TimerProvider({ children }: PropsWithChildren) {
       const left = count + (Number(new Date()) - Number(initTime));
       handleCount(left);
       handleFormattedTime(showTimer(left));
-    }, 1);
+    }, 100);
     return () => clearInterval(id);
   }, [start, count, initTime, handleCount, handleFormattedTime]);
 

@@ -1,85 +1,65 @@
 import Timer from "./components/Timer";
+import History from "./components/History";
+import { PokemonContext } from "./context/pokemon/context";
 import { TimerContext } from "./context/timer/context";
 import formatPokemonName from "./utils/formatPokemonName";
-import { getPokemonByGen } from "./utils/pokemon";
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
+import Generation from "./components/Generation";
 
 function App() {
   const timerValue = useContext(TimerContext);
-  const pokemonList = getPokemonByGen(1);
-  const progress = localStorage.getItem("pokemonFound");
-
-  const [pokemonFound, setPokemonFound] = useState<string[]>(
-    progress ? JSON.parse(progress) : []
-  );
-  const [inputValue, setInputValue] = useState("");
-
-  const handleReset = () => setInputValue("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setInputValue(e.target.value);
-
-  // FORMAT POKEMON NAMES TO PREVENT PROBLEM WITH CASE, SYMBOLS OR WHITESPACES
-  const pokemonNames = pokemonList.map((pokemon) => {
-    return formatPokemonName(pokemon.name);
-  });
-
-  // CHECK IF THE POKEMON FOUND PROGRESS IS ALREADY SAVED IN LOCALSTORAGE, IF NOT, CREATES IT, IF YES, UPDATES IT IF NEEDED.
-  if (progress) {
-    if (JSON.stringify(progress) !== JSON.stringify([pokemonFound])) {
-      localStorage.setItem("pokemonFound", JSON.stringify(pokemonFound));
-    }
-  } else {
-    localStorage.setItem("pokemonFound", JSON.stringify(pokemonFound));
-  }
-
-  // CHECK IF POKEMON WAS ALREADY FOUND, IF NOT, INSERT IT TO pokemonFound ARRAY STATE.
-  const pokemonAlreadyInserted = pokemonFound.includes(inputValue);
-  if (pokemonNames.includes(inputValue) && !pokemonAlreadyInserted) {
-    setPokemonFound((prevState) => [...prevState, inputValue]);
-    handleReset();
-  }
+  const {
+    pokemonFound,
+    pokemonList,
+    handleChange,
+    pokemonAlreadyInserted,
+    userInput,
+  } = useContext(PokemonContext);
 
   return (
-    <div className="font-[Pokemon_Solid] tracking-widest">
-      <h1 className="text-5xl text-center mt-20 mb-10 text-pokemon-yellow">
+    <div className="font-[Pokemon_Solid]">
+      <h1 className="text-pokemon-yellow mt-20 mb-10 text-center text-5xl">
         Name Every Pokémon
       </h1>
-      <div className="flex gap-3 flex-wrap w-10/12 m-auto px-10 py-3 rounded-lg ">
-        {pokemonList.map((pokemon) => (
-          <div key={pokemon.id}>
-            <img
-              className={`w-15  ${
-                !pokemonFound.includes(formatPokemonName(pokemon.name))
-                  ? "grayscale"
-                  : "animate-bounce"
-              }
-              `}
-              src={pokemon.spriteUrl}
-              alt={pokemon.name}
-            />
-          </div>
-        ))}
+      <div className="my-10 flex justify-center">
+        <div className="flex w-7xl flex-wrap gap-3 rounded-lg px-10 py-3">
+          {pokemonList.map((pokemon) => (
+            <div key={pokemon.id}>
+              <img
+                className={`${
+                  !pokemonFound.includes(formatPokemonName(pokemon.name))
+                    ? "grayscale"
+                    : "animate-bounce"
+                } w-12`}
+                src={pokemon.spriteUrl}
+                alt={pokemon.name}
+              />
+            </div>
+          ))}
+        </div>
+        <div>
+          <History />
+          <Generation />
+        </div>
       </div>
-      <div className="w-full flex gap-5 justify-center mt-5 items-center">
+      <div className="mt-5 flex w-full items-center justify-center gap-5">
         <Timer />
-        <div className="flex flex-col gap-2 items-center relative">
+        <div className="relative flex flex-col items-center gap-2">
           <input
             type="text"
-            value={inputValue}
+            value={userInput}
             placeholder="Type a Pokémon name here"
-            className="w-80 text-center p-3 rounded-md bg-neutral-50 disabled:bg-neutral-400"
+            className="bg-pokemon-yellow border-pokemon-yellow-shadow focus:outline-pokemon-light-blue w-80 rounded-md border-6 p-3 text-center focus:outline-4 focus:outline-offset-2 disabled:border-neutral-600 disabled:bg-neutral-400"
             onChange={handleChange}
             disabled={!timerValue.start}
           />
           {pokemonAlreadyInserted && (
-            <span className="text-pokemon-yellow absolute -bottom-8 w-90">
+            <span className="text-pokemon-yellow absolute -bottom-10 w-90 translate-x-7">
               This Pokémon has already been named!
             </span>
           )}
         </div>
-
-        <span className="text-lg text-pokemon-yellow">
+        <span className="text-pokemon-yellow text-2xl">
           <span className="text-white">{pokemonFound.length}</span> of{" "}
           <span className="text-white">{pokemonList.length}</span> Pokémon
           named! {pokemonFound.length === 151 && "Congratulations!"}

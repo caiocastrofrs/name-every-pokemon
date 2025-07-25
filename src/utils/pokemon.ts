@@ -39,7 +39,7 @@ const getPokemonIdByName = (name: string) => {
 
 const formatPokemonObject = (name: string) => {
   const pokemonId = getPokemonIdByName(name);
-  const pokemonSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+  const pokemonSprite = `/sprites/pokemon/${pokemonId}.png`;
 
   const pokemon = {
     id: pokemonId,
@@ -51,24 +51,16 @@ const formatPokemonObject = (name: string) => {
 };
 
 const getPokemonByGen = (gen: number): Pokemon[] => {
-  const pokemonList = localStorage.getItem("pokemon");
+  const allPokemon = getAllPokemon();
 
-  if (pokemonList && pokemonList.length > 0) {
-    return JSON.parse(pokemonList);
-  } else {
-    const allPokemon = getAllPokemon();
+  const generationStart = generationRanges[gen].start;
+  const generationEnd = generationRanges[gen].end;
 
-    const generationStart = generationRanges[gen].start;
-    const generationEnd = generationRanges[gen].end;
+  const generation = allPokemon.slice(generationStart - 1, generationEnd);
 
-    const generation = allPokemon.slice(generationStart - 1, generationEnd);
+  const formattedPokemon = generation.map((name) => formatPokemonObject(name));
 
-    const formattedPokemon = generation.map((name) =>
-      formatPokemonObject(name)
-    );
-    localStorage.setItem("pokemon", JSON.stringify(formattedPokemon));
-    return formattedPokemon;
-  }
+  return formattedPokemon;
 };
 
 export {
