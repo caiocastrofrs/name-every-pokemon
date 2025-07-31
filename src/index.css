@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-/* body {
-  background-image: url("https://assets.pokemon.com//assets/cms2/img/misc/virtual-backgrounds/animation/pikachu-and-caterpie-01.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-} */
-
 @theme {
   --color-pokemon-dark-blue: #3c5aa6;
   --color-pokemon-yellow-shadow: #c7a008;

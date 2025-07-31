@@ -21,7 +21,7 @@ function App() {
       <h1 className="text-pokemon-yellow mt-20 mb-10 text-center text-5xl">
         Name Every Pokémon
       </h1>
-      <div className="my-10 flex justify-center">
+      <div className="my-10 mb-40 flex justify-center">
         <div className="flex w-7xl flex-wrap gap-3 rounded-lg px-10 py-3">
           {pokemonList.map((pokemon) => (
             <div key={pokemon.id}>
@@ -30,7 +30,7 @@ function App() {
                   !pokemonFound.includes(formatPokemonName(pokemon.name))
                     ? "grayscale"
                     : "animate-bounce"
-                } w-12`}
+                } w-25`}
                 src={pokemon.spriteUrl}
                 alt={pokemon.name}
               />
@@ -42,7 +42,7 @@ function App() {
           <Generation />
         </div>
       </div>
-      <div className="mt-5 flex w-full items-center justify-center gap-5">
+      <div className="fixed bottom-5 mt-5 flex w-full items-center justify-center gap-5 p-5">
         <Timer />
         <div className="relative flex flex-col items-center gap-2">
           <input
