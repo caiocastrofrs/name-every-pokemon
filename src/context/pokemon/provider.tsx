@@ -88,10 +88,10 @@ export default function PokemonProvider({ children }: PropsWithChildren) {
           ];
 
           setCompletedHistory(JSON.stringify(updatedHistory));
-
-          timerContext.clearTime();
-          setPokemonFound([]);
         }
+
+        timerContext.clearTime();
+        setPokemonFound([]);
       });
     }
   }, [
