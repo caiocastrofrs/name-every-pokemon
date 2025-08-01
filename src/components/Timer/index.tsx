@@ -7,26 +7,20 @@ export default function Timer() {
     useContext(TimerContext);
   const { resetRun } = useContext(PokemonContext);
   return (
-    <div className="flex gap-5 items-center">
-      <span className="text-4xl text-pokemon-yellow w-25 h-15">
+    <div className="flex items-center gap-5">
+      <span className="text-pokemon-yellow h-15 w-25 text-4xl">
         {formattedTime}
       </span>
-      <button
-        className="text-white py-3 px-5 rounded-md cursor-pointer hover:"
-        onClick={clearTime}
-      >
-        Clear
-      </button>
       {start ? (
         <button
-          className="py-3 bg-red-500 border border-pokemon-dark-blue rounded-md cursor-pointer hover:bg-red-400 px-5"
+          className="border-pokemon-dark-blue cursor-pointer rounded-md border bg-red-500 px-5 py-3 hover:bg-red-400"
           onClick={() => resetRun()}
         >
           Stop
         </button>
       ) : (
         <button
-          className="text-pokemon-dark-blue py-3 bg-pokemon-yellow border border-pokemon-dark-blue rounded-md cursor-pointer hover:bg-pokemon-yellow-shadow px-5"
+          className="text-pokemon-dark-blue bg-pokemon-yellow border-pokemon-dark-blue hover:bg-pokemon-yellow-shadow cursor-pointer rounded-md border px-5 py-3"
           onClick={() => handleStart(true)}
         >
           Start
