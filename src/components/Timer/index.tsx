@@ -3,8 +3,7 @@ import { TimerContext } from "../../context/timer/context";
 import { PokemonContext } from "../../context/pokemon/context";
 
 export default function Timer() {
-  const { formattedTime, handleStart, start, clearTime } =
-    useContext(TimerContext);
+  const { formattedTime, handleStart, start } = useContext(TimerContext);
   const { resetRun } = useContext(PokemonContext);
   return (
     <div className="flex items-center gap-5">
