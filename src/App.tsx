@@ -41,7 +41,9 @@ function App() {
                 >
                   <img
                     className={`${
-                      !alreadyNamed ? "grayscale" : "animate-bounce"
+                      alreadyNamed && !hideNamedPokemon
+                        ? "animate-bounce"
+                        : !alreadyNamed && !hideNamedPokemon && "grayscale"
                     } w-25`}
                     src={pokemon.spriteUrl}
                     alt={pokemon.name}
