@@ -9,13 +9,13 @@ export default function Generation() {
 
   return (
     <div className="">
-      <span className="text-pokemon-yellow mb-10 block text-2xl">
+      <span className="text-pokemon-yellow block font-[Pokemon_Solid] text-2xl">
         Choose the generation
       </span>
       <select
         disabled={start}
         value={currentGeneration}
-        className="text-pokemon-dark-blue border-pokemon-yellow-shadow bg-pokemon-yellow w-full rounded-md border-6 px-5 font-bold disabled:border-neutral-600 disabled:bg-neutral-400"
+        className="text-pokemon-dark-blue border-pokemon-yellow-shadow bg-pokemon-yellow w-full rounded-md border-6 px-5 py-3 font-bold disabled:border-neutral-600 disabled:bg-neutral-400"
         onChange={(e) => handleChangeGeneration(Number(e.target.value))}
       >
         <option value={1} defaultChecked>

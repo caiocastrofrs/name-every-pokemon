@@ -12,14 +12,14 @@ export default function Timer() {
       </span>
       {start ? (
         <button
-          className="border-pokemon-dark-blue cursor-pointer rounded-md border bg-red-500 px-5 py-3 hover:bg-red-400"
+          className="border-pokemon-dark-blue cursor-pointer rounded-md border bg-red-500 px-5 py-3 font-[Pokemon_Solid] hover:bg-red-400"
           onClick={() => resetRun()}
         >
           Stop
         </button>
       ) : (
         <button
-          className="text-pokemon-dark-blue bg-pokemon-yellow border-pokemon-dark-blue hover:bg-pokemon-yellow-shadow cursor-pointer rounded-md border px-5 py-3"
+          className="text-pokemon-dark-blue bg-pokemon-yellow border-pokemon-dark-blue hover:bg-pokemon-yellow-shadow cursor-pointer rounded-md border px-5 py-3 font-[Pokemon_Solid]"
           onClick={() => handleStart(true)}
         >
           Start

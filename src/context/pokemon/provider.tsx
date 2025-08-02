@@ -1,7 +1,6 @@
 import {
   useCallback,
   useContext,
-  useEffect,
   useState,
   type PropsWithChildren,
 } from "react";
@@ -26,18 +25,20 @@ const totalPokemonByGeneration: Record<number, number> = {
 
 export default function PokemonProvider({ children }: PropsWithChildren) {
   const timerContext = useContext(TimerContext);
-
   const [currentGeneration, setCurrentGeneration] = useState(1);
 
-  const [userInput, setUserInput] = useState("");
-
   const pokemonList = getPokemonByGen(currentGeneration);
+
   const pokemonNames = pokemonList.map((pokemon) => {
     return formatPokemonName(pokemon.name);
   });
+  const [hideNamedPokemon, setHideNamedPokemon] = useState(false);
   const [pokemonFound, setPokemonFound] = useState<string[]>([]);
+  const [userInput, setUserInput] = useState("");
 
   const handleReset = () => setUserInput("");
+
+  const handleHideNamedPokemon = (value: boolean) => setHideNamedPokemon(value);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setUserInput(e.target.value);
 
@@ -57,17 +58,18 @@ export default function PokemonProvider({ children }: PropsWithChildren) {
     JSON.stringify([]),
   );
 
-  const resetRun = () => {
+  const resetRun = useCallback(() => {
     setPokemonFound([]);
     timerContext.handleStart(false);
+    setUserInput("");
     timerContext.clearTime();
-  };
+  }, [timerContext]);
 
   const checkIfRunIsCompleted = useCallback(() => {
-    if (
-      pokemonFound.length === totalPokemonByGeneration[currentGeneration] &&
-      timerContext.start
-    ) {
+    const isRunCompleted =
+      pokemonFound.length === totalPokemonByGeneration[currentGeneration];
+
+    if (isRunCompleted && timerContext.start) {
       timerContext.handleStart(false);
       Swal.fire({
         title: "Good job!",
@@ -90,22 +92,19 @@ export default function PokemonProvider({ children }: PropsWithChildren) {
           setCompletedHistory(JSON.stringify(updatedHistory));
         }
 
-        timerContext.clearTime();
-        setPokemonFound([]);
+        resetRun();
       });
     }
   }, [
     completedHistory,
-    pokemonFound.length,
+    pokemonFound,
     setCompletedHistory,
     timerContext,
+    resetRun,
     currentGeneration,
   ]);
 
-  useEffect(
-    () => checkIfRunIsCompleted(),
-    [pokemonFound, timerContext, completedHistory, checkIfRunIsCompleted],
-  );
+  checkIfRunIsCompleted();
 
   return (
     <PokemonContext.Provider
@@ -118,6 +117,8 @@ export default function PokemonProvider({ children }: PropsWithChildren) {
         handleChange,
         handleChangeGeneration,
         resetRun,
+        hideNamedPokemon,
+        handleHideNamedPokemon,
       }}
     >
       {children}

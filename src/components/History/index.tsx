@@ -24,11 +24,11 @@ export default function History() {
     JSON.stringify([]),
   );
 
-  const parsed: HistoryType[] = JSON.parse(completedHistory);
+  const parsedCompletedHistory: HistoryType[] = JSON.parse(completedHistory);
 
   return (
-    <div className="p-5">
-      <span className="text-pokemon-yellow mb-10 block text-2xl">
+    <div>
+      <span className="text-pokemon-yellow mt-10 block font-[Pokemon_Solid] text-2xl">
         Previous challenges
       </span>
       <div className="border-pokemon-yellow-shadow bg-pokemon-yellow text-pokemon-light-blue flex-col gap-2 rounded-md border-6 px-2 py-4">
@@ -39,7 +39,7 @@ export default function History() {
           </span>
           <span className="border-pokemon-light-blue border-b-4">Time</span>
         </div>
-        {parsed.map((item, index: number) => (
+        {parsedCompletedHistory.map((item, index: number) => (
           <div
             className="flex justify-between px-3"
             key={item.timeInMilliseconds + index}

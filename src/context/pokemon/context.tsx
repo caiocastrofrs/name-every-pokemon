@@ -7,8 +7,10 @@ type PokemonContextType = {
   userInput: string;
   pokemonAlreadyInserted: boolean;
   currentGeneration: number;
+  hideNamedPokemon: boolean;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleChangeGeneration: (value: number) => void;
+  handleHideNamedPokemon: (value: boolean) => void;
   resetRun: () => void;
 };
 
